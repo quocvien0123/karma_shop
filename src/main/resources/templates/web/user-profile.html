@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/defaultWeb::layout(~{::section})}">
+<head>
+  <meta charset="UTF-8">
+  <title>Karma</title>
+</head>
+<body>
+<section class="checkout_area section_gap mt-5">
+  <div class="container">
+    <div class="billing_details">
+      <div class="col-lg-12">
+        <form class="row contact_form" th:action="@{/web/profile}" th:method="POST" novalidate="novalidate" enctype="multipart/form-data">
+          <div class="col-md-12 form-group text-center">
+            <img id="authorImage" class="author_img rounded-circle" style="width: 38vh; height: 38vh; object-fit: cover" th:src="@{'/assets/web/img/avatar/' + ${session.USER.image}}" alt="">
+          </div>
+          <div class="col-md-12 form-group">
+            <p class="text-danger" th:if="${error}" th:text="${error}"></p>
+          </div>
+          <div class="col-md-12 form-group">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Họ và tên" th:value="${session.USER.name}">
+          </div>
+          <div class="col-md-12 form-group">
+            <input type="date" class="form-control" id="dob" name="dob" placeholder="Ngày sinh" th:value="${session.USER.dob}">
+          </div>
+          <div class="col-md-6 form-group p_star">
+            <input type="text" class="form-control" id="number" name="phoneNumber" th:value="${session.USER.phoneNumber}" placeholder="Số điện thoại">
+          </div>
+          <div class="col-md-6 form-group p_star">
+            <input type="email" class="form-control" id="email" name="email" th:value="${session.USER.email}" placeholder="Email">
+          </div>
+          <div class="col-md-12 form-group p_star">
+            <select class="country_select" name="gender" th:value="${session.USER.gender}">
+              <option disabled selected>Giới tính</option>
+              <option th:selected="${session.USER.gender == 'Nam'}" value="Nam">Nam</option>
+              <option th:selected="${session.USER.gender == 'Nữ'}" value="Nữ">Nữ</option>
+              <option th:selected="${session.USER.gender == 'Khác'}" value="Khác">Khác</option>
+            </select>
+          </div>
+          <div class="col-md-12 form-group p_star">
+            <input type="text" class="form-control" id="add1" name="address" th:value="${session.USER.address}" placeholder="Địa chỉ">
+          </div>
+          <div class="col-md-12 form-group">
+            <input type="file" class="form-control-file" id="imageInput" name="file" accept="image/*" >
+          </div>
+          <div class="col-md-12 form-group text-center">
+            <button type="submit" class="primary-btn">Lưu</button>
+          </div>
+        </form>
+      </div>
+      <script>
+        const imageInput = document.getElementById('imageInput');
+        const authorImage = document.getElementById('authorImage');
+
+        imageInput.addEventListener('change', function(event) {
+          const file = event.target.files[0];
+
+          if (file && file.type.startsWith('image/')) {
+            const imageUrl = URL.createObjectURL(file);
+            authorImage.src = imageUrl;
+
+            authorImage.onload = () => URL.revokeObjectURL(imageUrl);
+          } else {
+            console.error("File không hợp lệ hoặc không phải là hình ảnh.");
+          }
+        });
+      </script>
+    </div>
+  </div>
+</section>
+</body>
+</html>

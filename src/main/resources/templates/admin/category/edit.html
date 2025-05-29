@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layouts/defaultAdmin::layout(~{::section})}"
+>
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Sửa danh mục</title>
+  </head>
+  <body class="app">
+    <section>
+      <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+          <div class="container-xl">
+            <div
+              class="row g-3 mb-4 align-items-center justify-content-between"
+            >
+              <div class="col-auto">
+                <h1 class="app-page-title mb-0">Sửa danh mục</h1>
+              </div>
+            </div>
+            <!--//row-->
+            <div class="row g-4">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="container-product">
+                  <form
+                    th:action="@{/admin/categories/update/{id}(id=${category.id})}"
+                    th:object="${category}"
+                    method="post"
+                    enctype="multipart/form-data"
+                  >
+                    <label for="category_id">Mã danh mục:</label>
+                    <input
+                      type="text"
+                      th:field="*{id}"
+                      value="${category.id}"
+                      required
+                    />
+
+                    <label for="category_name">Tên danh mục:</label>
+                    <input
+                      type="text"
+                      th:field="*{name}"
+                      value="${category.name}"
+                      required
+                    />
+
+                    <label for="category">Mô tả:</label>
+                    <textarea th:field="*{description}">
+  ${category.description}</textarea
+                    >
+
+                    <input type="submit" value="Sửa danh mục" />
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--//container-fluid-->
+        </div>
+        <!--//app-content-->
+      </div>
+    </section>
+  </body>
+</html>

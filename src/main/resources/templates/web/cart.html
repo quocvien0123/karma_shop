@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/defaultWeb::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<body>
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner mt-5">
+            <div class="table-responsive">
+                <table class="table" th:if="${cart!=null}">
+                    <thead>
+                    <tr>
+                        <th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Giá</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col">&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each=" item : ${cart.cartItems}">
+                        <td>
+                            <div class="media">
+                                <div class="d-flex">
+                                    <img width="90vh" th:src="@{'/assets/web/img/product/' + ${item.product.image}}"
+                                         alt="">
+                                </div>
+                                <div class="media-body">
+                                    <p th:text="${item.product.name}"></p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <h5 th:text="${item.price + 'đ'}"></h5>
+                        </td>
+                        <td>
+                            <div class="product_count">
+                                <form th:action="@{/web/cart/update}" method="post">
+                                    <input type="hidden" th:value="${cart.id}" name="id"
+                                           class="input-text qty">
+                                    <input type="hidden" th:value="${item.product.id}" name="productId"
+                                           class="input-text qty">
+                                    <input type="hidden" th:value="1" name="quantity"
+                                           class="input-text qty">
+                                    <button class="increase items-count" type="submit">
+                                        <i class="lnr lnr-chevron-up"></i>
+                                    </button>
+                                </form>
+                                <form th:action="@{/web/cart/update}" method="post"
+                                      onsubmit="return handleFormSubmit(event)">
+                                    <input type="hidden" th:value="${cart.id}" name="id"
+                                           class="input-text qty">
+                                    <input type="hidden" th:value="${item.product.id}" name="productId"
+                                           class="input-text qty">
+                                    <input type="text" th:id="${'sst-' + item.product.id}"
+                                           name="quantity" min="1" th:value="${item.quantity}" id="inputField"
+                                           class="input-text qty">
+                                    <button style="display: none" type="submit">Submit</button>
+                                </form>
+                                <script>
+                                    function handleFormSubmit(event) {
+                                        if (event.target.querySelector('#inputField').value === '') {
+                                            event.preventDefault();
+                                            alert("Vui lòng nhập thông tin!");
+                                            return false;
+                                        }
+                                        return true;  // Nếu không thì submit bình thường
+                                    }
+                                </script>
+                                <form th:action="@{/web/cart/update}" method="post">
+                                    <input type="hidden" th:value="${cart.id}" name="id"
+                                           class="input-text qty">
+                                    <input type="hidden" th:value="${item.product.id}" name="productId"
+                                           class="input-text qty">
+                                    <input type="hidden" th:value="-1" name="quantity"
+                                           class="input-text qty">
+                                    <button type="submit" class="reduced items-count">
+                                        <i class="lnr lnr-chevron-down"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <h5 th:text="${item.price * item.quantity + 'đ'}"></h5>
+                        </td>
+                        <td>
+                            <form th:action="@{/web/cart/remove}" method="post">
+                                <input type="hidden" name="productId" th:value="${item.product.id}"/>
+                                <button class="primary-btn" type="submit">Xóa</button>
+                            </form>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <h5>Tạm tính</h5>
+                        </td>
+                        <td>
+                            <h5 th:text="${cart.totalMoney()}"></h5>
+                        </td>
+                    </tr>
+
+                    <tr class="out_button_area">
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <div class="checkout_btn_inner d-flex align-items-center">
+                                <a class="gray_btn" th:href="@{/home}">Tiếp tục mua sắm</a>
+                                <form th:action="@{/order/create}" method="post">
+                                    <input type="hidden" name="productName" th:value="'Thanh toán đơn hàng - ' + ${#lists.size(cart.cartItems)} + ' sản phẩm'" />
+                                    <input type="hidden" name="description" th:value="'Tổng đơn hàng: ' + ${cart.totalMoney()}" />
+                                    <input type="hidden" name="price" th:value="${cart.totalMoney()}" />
+                                    <button type="submit" class="primary-btn" style="border: none">Thanh toán với PayOS</button>
+                                </form>
+
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p th:if="${cart == null}" class="text-center">
+                    Vui lòng thêm sản phẩm để tiếp tục!
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Cart Area =================-->
+
+</body>
+</html>

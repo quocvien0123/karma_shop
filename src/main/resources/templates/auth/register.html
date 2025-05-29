@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/defaultWeb::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập</title>
+</head>
+<body>
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Đăng ký</h1>
+                <nav class="d-flex align-items-center">
+                    <a th:href="@{/home}">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a th:href="@{/login}">Đăng nhập</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Register Box Area =================-->
+<section class="login_box_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_box_img">
+                    <img class="img-fluid" th:src="@{/assets/web/img/login.jpg}" alt="">
+                    <div class="hover">
+                        <h4>KARMA</h4>
+                        <p>Sự lựa chọn tuyệt vời cho cuộc hành trình của bạn!</p>
+                        <a class="primary-btn" th:href="@{/login}">Đăng nhập</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login_form_inner" style="padding: 8vh 0">
+                    <h3>Đăng ký</h3>
+                    <div th:if="${param.error}">
+                        <p style="color: red;" th:text="${param.error}"></p>
+                    </div>
+                    <form class="row login_form" th:action="@{/register}" method="post" id="contactForm"
+                          novalidate="novalidate">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Tên">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Tên đăng nhập">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="password" class="form-control" id="password-confirmation"
+                                   name="password-confirmation" placeholder="Nhập lại mật khẩu">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" value="submit" class="primary-btn">Đăng ký</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Register Box Area =================-->
+
+</body>
+</html>

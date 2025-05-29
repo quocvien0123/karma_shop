@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/defaultAdmin::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Karma - Admin Product</title>
+</head>
+<body>
+
+<section>
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+            <div class="container-xl">
+                <div class="row g-3 mb-4 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <h1 class="app-page-title mb-0">Quản trị viên</h1>
+                    </div>
+                    <div class="col-auto">
+                        <div class="page-utilities">
+                            <div
+                                    class="row g-2 justify-content-start justify-content-md-end align-items-center"
+                            >
+                                <div class="col-auto">
+                                    <form class="table-search-form row gx-1 align-items-center" th:action="@{/admin/users/search-admin}" method="get">
+                                        <div class="col-auto">
+                                            <input
+                                                    type="text"
+                                                    id="search-orders"
+                                                    name="query"
+                                                    class="form-control search-orders"
+                                                    placeholder="Nội dung"
+                                            />
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type="submit" class="btn app-btn-secondary">
+                                                Tìm
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--//col-->
+                                <div class="col-auto">
+                                    <a
+                                            class="btn app-btn-secondary"
+                                            th:href="@{/admin/users/create-admin}"
+                                    >
+                                        Thêm quản trị viên
+                                    </a>
+                                </div>
+                            </div>
+                            <!--//row-->
+                        </div>
+                        <!--//table-utilities-->
+                    </div>
+                    <!--//col-auto-->
+                </div>
+                <!--//row-->
+
+                <div class="tab-content" id="orders-table-tab-content">
+                    <div
+                            class="tab-pane fade show active"
+                            id="orders-all"
+                            role="tabpanel"
+                            aria-labelledby="orders-all-tab"
+                    >
+                        <div class="app-card app-card-orders-table shadow-sm mb-5">
+                            <div class="app-card-body">
+                                <div class="table-responsive">
+                                    <table class="table app-table-hover mb-0 text-left">
+                                        <thead>
+                                        <tr>
+                                            <th style="text-align: center; width: 80px">Tên</th>
+                                            <th style="text-align: center; width: 80px">Tên đăng nhập</th>
+                                            <th style="text-align: center; width: 100px">
+                                                Giới tính
+                                            </th>
+                                            <th style="text-align: center; width: 100px">
+                                                Email
+                                            </th>
+                                            <th style="text-align: center; width: 100px">
+                                                Số điện thoại
+                                            </th>
+                                            <th style="text-align: center; width: 100px">
+                                                Địa chỉ
+                                            </th>
+                                            <th style="text-align: center; width: 100px">
+                                                Trạng thái
+                                            </th>
+                                            <th style="text-align: center; width: 100px">
+                                                Ngày tạo
+                                            </th>
+                                            <th style="text-align: center; width: 100px">
+                                                Ngày cập nhật
+                                            </th>
+                                            <th style="text-align: center; width: 100px">
+                                                Ngày khoá (gần nhất)
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="item : ${admin}">
+                                            <td style="text-align: center" th:text="${item.name}"></td>
+                                            <td style="text-align: center" th:text="${item.username}"></td>
+                                            <td style="text-align: center" th:text="${item.gender}"></td>
+                                            <td style="text-align: center" th:text="${item.email}"></td>
+                                            <td style="text-align: center" th:text="${item.phoneNumber}"></td>
+                                            <td style="text-align: center" th:text="${item.address}"></td>
+                                            <td style="text-align: center" th:text="${item.status}"></td>
+                                            <td style="text-align: center" th:text="${item.createdDate}"></td>
+                                            <td style="text-align: center" th:text="${item.updatedDate}"></td>
+                                            <td style="text-align: center" th:text="${item.deleteDate}"></td>
+                                            <td style="text-align: center">
+                                                <form th:action="@{/admin/users/update-status}" method="post">
+                                                    <input type="hidden" th:value="${item.id}" name="id">
+                                                    <input type="submit" class="btn btn-primary" value="Khoá"/>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!--//table-responsive-->
+                            </div>
+                            <!--//app-card-body-->
+                        </div>
+                        <!--//app-card-->
+
+                    </div>
+                    <!--//tab-pane-->
+                </div>
+                <!--//tab-content-->
+            </div>
+            <!--//container-fluid-->
+        </div>
+        <!--//app-content-->
+
+    </div>
+</section>
+</body>
+</html>

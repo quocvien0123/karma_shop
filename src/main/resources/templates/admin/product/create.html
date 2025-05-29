@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="~{layouts/defaultAdmin::layout(~{::section})}"
+>
+<head>
+  <meta charset="UTF-8" />
+  <title>Thêm sản phẩm</title>
+</head>
+<body class="app">
+<section>
+  <div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+      <div class="container-xl">
+        <div class="row g-3 mb-4 align-items-center justify-content-between">
+          <div class="col-auto">
+            <h1 class="app-page-title mb-0">Thêm sản phẩm mới</h1>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="container-product">
+              <form
+                      th:action="@{/admin/products/create}"
+                      th:object="${product}"
+                      method="post"
+                      enctype="multipart/form-data"
+              >
+                <label for="product_id">Mã sản phẩm:</label>
+                <input type="text" th:field="*{id}" required />
+
+                <label for="product_name">Tên sản phẩm:</label>
+                <input type="text" th:field="*{name}" required />
+
+                <label for="product_price">Đơn giá:</label>
+                <input type="number" th:field="*{price}" required />
+
+                <label for="product_quantity">Số lượng tồn:</label>
+                <input type="number" th:field="*{quantity}" required />
+
+                <label for="product_image">Hình ảnh sản phẩm:</label>
+                <input type="file" id="imageInput" th:field="*{image}" />
+
+                <div style="margin: 10px 0;">
+                  <img
+                          id="productImage"
+                          class="img-fluid"
+                          alt="Hình xem trước"
+                          style="max-width: 200px; display: none;"
+                  />
+                </div>
+
+                <label for="product_category">Danh mục:</label>
+                <select th:field="*{categoryid}" required>
+                  <option value="">Chọn danh mục</option>
+                  <option
+                          th:each="category : ${categories}"
+                          th:value="${category.id}"
+                          th:text="${category.name}"
+                  ></option>
+                </select>
+
+                <label for="product_description">Mô tả sản phẩm:</label>
+                <textarea th:field="*{description}"></textarea>
+
+                <input type="submit" value="Upload sản phẩm" />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const imageInput = document.getElementById('imageInput');
+          const previewImage = document.getElementById('productImage');
+
+          if (imageInput && previewImage) {
+            imageInput.addEventListener('change', function (event) {
+              const file = event.target.files[0];
+
+              if (file && file.type.startsWith('image/')) {
+                const imageUrl = URL.createObjectURL(file);
+                previewImage.src = imageUrl;
+                previewImage.style.display = "block";
+
+                previewImage.onload = () => URL.revokeObjectURL(imageUrl);
+              } else {
+                previewImage.src = "";
+                previewImage.style.display = "none";
+                console.error("File không hợp lệ hoặc không phải là hình ảnh.");
+              }
+            });
+          }
+        });
+      </script>
+    </div>
+  </div>
+</section>
+
+<!-- JavaScript hiển thị preview hình ảnh -->
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/defaultWeb::layout(~{::section})}">
+<head>
+    <title>Thanh toán bị hủy</title>
+</head>
+<body>
+<section style="min-height: 70vh; display: flex; flex-direction: column; justify-content: center;">
+    <div class="container text-center mt-5 mb-5">
+        <h2 th:text="${message}" style="font-family: Roboto">Thanh toán thành công!</h2>
+        <a class="primary-btn mt-3" href="/shoe-shop/web/cart">Quay lại giỏ hàng</a>
+    </div>
+</section>
+</body>
+</html>

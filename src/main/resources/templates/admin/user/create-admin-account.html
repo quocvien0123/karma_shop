@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/defaultAdmin::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Karma - Admin Product</title>
+</head>
+<body>
+
+<section>
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+            <div class="container-xl">
+                <div class="row g-3 mb-4 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <h1 class="app-page-title mb-0">Thêm quản trị viên</h1>
+                    </div>
+                </div>
+                <!--//row-->
+                <div class="row g-4">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="container-product">
+                            <form th:action="@{/admin/users/create-admin}"
+                                    method="post">
+                                <p class="text-danger" th:if="${error}" th:text="${error}"></p>
+                                <label for="name">Họ và tên:</label>
+                                <input type="text" id="name" th:value="${model != null ? model.name : ''}" class="form-control" name="name" required />
+
+                                <label for="dob">Ngày sinh:</label>
+                                <input type="date" id="dob" th:value="${model != null ? model.dob : ''}" name="dob" class="form-control" required style="margin-bottom: 20px" />
+
+                                <label for="gender">Giới tính:</label>
+                                <select name="gender" id="gender" class="form-control" required>
+                                    <option value="Nam" th:selected = "${model != null && model == 'Nam' ? true : false}">Nam</option>
+                                    <option value="Nữ" th:selected = "${model != null && model == 'Nữ' ? true : false}">Nữ</option>
+                                    <option value="Khác" th:selected = "${model != null && model == 'Khác' ? true : false}">Khác</option>
+                                </select>
+
+                                <label for="email">Email:</label>
+                                <input type="text" id="email" th:value="${model != null ? model.email : ''}" name="email" class="form-control" required />
+
+                                <label for="phoneNumber">Số điện thoại:</label>
+                                <input type="text" id="phoneNumber" th:value="${model != null ? model.phoneNumber : ''}" name="phoneNumber" class="form-control" required />
+
+                                <label for="address">Địa chỉ:</label>
+                                <input type="text" id="address" th:value="${model != null ? model.address : ''}" name="address" class="form-control" required />
+
+                                <label for="username">Tên đăng nhập:</label>
+                                <input type="text" id="username" th:value="${model != null ? model.username : ''}" name="username" class="form-control" required />
+
+                                <label for="password">Mật khẩu:</label>
+                                <input type="password" id="password" name="password" class="form-control" required />
+
+                                <label for="password">Nhập lại mật khẩu:</label>
+                                <input type="password" id="re-password" name="confirmPassword" class="form-control" required />
+
+                                <input type="submit" value="Lưu" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--//container-fluid-->
+        </div>
+        <!--//app-content-->
+    </div>
+</section>
+</body>
+</html>

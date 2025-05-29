@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layouts/defaultAdmin::layout(~{::section})}"
+>
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Danh mục sản phẩm</title>
+  </head>
+  <body class="app">
+    <section>
+      <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+          <div class="container-xl">
+            <div
+              class="row g-3 mb-4 align-items-center justify-content-between"
+            >
+              <div class="col-auto">
+                <h1 class="app-page-title mb-0">Danh mục sản phẩm</h1>
+              </div>
+              <div class="col-auto">
+                <div class="page-utilities">
+                  <div
+                    class="row g-2 justify-content-start justify-content-md-end align-items-center"
+                  >
+                    <div class="col-auto">
+                      <form
+                        class="table-search-form row gx-1 align-items-center"
+                      >
+                        <div class="col-auto">
+                          <input
+                            type="text"
+                            id="search-orders"
+                            name="searchorders"
+                            class="form-control search-orders"
+                            placeholder="Search"
+                          />
+                        </div>
+                        <div class="col-auto">
+                          <button type="submit" class="btn app-btn-secondary">
+                            Search
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <!--//col-->
+                    <div class="col-auto">
+                      <a
+                        class="btn app-btn-secondary"
+                        th:href="@{/admin/categories/create}"
+                      >
+                        Thêm danh mục
+                      </a>
+                    </div>
+                  </div>
+                  <!--//row-->
+                </div>
+                <!--//table-utilities-->
+              </div>
+              <!--//col-auto-->
+            </div>
+            <!--//row-->
+
+            <div class="tab-content" id="orders-table-tab-content">
+              <div
+                class="tab-pane fade show active"
+                id="orders-all"
+                role="tabpanel"
+                aria-labelledby="orders-all-tab"
+              >
+                <div class="app-card app-card-orders-table shadow-sm mb-5">
+                  <div class="app-card-body">
+                    <div class="table-responsive">
+                      <table class="table app-table-hover mb-0 text-left">
+                        <thead>
+                          <tr>
+                            <th style="text-align: center; width: 80px">Id</th>
+                            <th style="text-align: center; width: 400px">
+                              Tên danh mục
+                            </th>
+                            <th style="text-align: center; width: 100px">
+                              Hành động
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr th:each="category : ${categories}">
+                            <td
+                              style="text-align: center"
+                              th:text="${category.id}"
+                            ></td>
+                            <td
+                              style="text-align: center"
+                              th:text="${category.name}"
+                            ></td>
+                            <td style="text-align: center">
+                              <a
+                                style="color: red"
+                                th:href="@{/admin/categories/edit/{id}(id=${category.id})}"
+                              >
+                                Sửa
+                              </a>
+                              <a
+                                style="color: red"
+                                th:href="@{/admin/categories/delete/{id}(id=${category.id})}"
+                              >
+                                Xóa
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!--//table-responsive-->
+                  </div>
+                  <!--//app-card-body-->
+                </div>
+                <!--//app-card-->
+              </div>
+              <!--//tab-pane-->
+            </div>
+            <!--//tab-content-->
+          </div>
+          <!--//container-fluid-->
+        </div>
+        <!--//app-content-->
+      </div>
+      <!--//app-wrapper-->
+    </section>
+  </body>
+</html>
