@@ -3,7 +3,11 @@ package com.gv.shoe_shop.controller.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.gv.shoe_shop.constants.StringConstant;
+import com.gv.shoe_shop.dto.response.UserResponse;
+import com.gv.shoe_shop.service.CartService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +25,11 @@ import java.util.Date;
 public class OrderController {
 
     private final PayOS payOS;
+    private final CartService cartService;
 
-    public OrderController(PayOS payOS) {
+    public OrderController(PayOS payOS, CartService cartService) {
         this.payOS = payOS;
+        this.cartService = cartService;
     }
 
     @Value("${payos.return-url}")
@@ -66,10 +72,18 @@ public class OrderController {
     }
 
     @GetMapping("/success")
-    public String paymentSuccess(Model model) {
+    public String paymentSuccess(Model model, HttpSession session) {
+        var user = (UserResponse) session.getAttribute(StringConstant.USER);
+        if (user != null) {
+            cartService.clearCartItemsByUserId(user.getId());
+        }
+
         model.addAttribute("message", "Thanh toán thành công!");
         return "web/success";
     }
+
+
+
 
     @GetMapping("/cancel")
     public String paymentCancel(Model model) {

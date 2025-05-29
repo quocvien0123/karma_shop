@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -88,5 +89,17 @@ public class CartService {
         cart.getCartItems().removeIf(item -> item.getProduct().getId().equals(id));
         cartRepository.save(cart);
     }
+
+    public void clearCartItemsByUserId(String userId) {
+        Optional<Cart> optionalCart = cartRepository.findByUserId(userId);
+        if (optionalCart.isPresent()) {
+            Cart cart = optionalCart.get();
+            cart.setCartItems(List.of()); // hoặc new ArrayList<>()
+            cartRepository.save(cart);
+        }
+    }
+
+
+
 
 }
