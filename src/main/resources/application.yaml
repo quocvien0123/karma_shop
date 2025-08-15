@@ -11,8 +11,8 @@ spring:
       uri: mongodb+srv://admin:IwZnTh0r2vUUpIAx@cluster0.okppazx.mongodb.net/shoe_shop?retryWrites=true&w=majority&appName=Cluster0
 
 payos:
-  client-id: e8a20744-cd58-4ce0-a42a-ea03074b78f6
-  api-key: d8f28bd7-9e18-492b-9455-4d067a274fe5
-  checksum-key: c721f5b8c0ca4964f643d4840703a3324598d3f118d0a82883ff9124475ee414
+  client-id:
+  api-key:
+  checksum-key:
   return-url: http://localhost:8080/shoe-shop/order/success
   cancel-url: http://localhost:8080/shoe-shop/order/cancel

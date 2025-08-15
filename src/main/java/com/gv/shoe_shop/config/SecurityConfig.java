@@ -58,7 +58,7 @@ public class SecurityConfig {
                 })
                 .formLogin(formLogin -> formLogin.loginPage("/login").loginProcessingUrl("/user-login")
                         .successHandler(successHandler)
-                        .failureHandler(customAuthenticationFailureHandler()) .permitAll())
+                        .failureHandler(customAuthenticationFailureHandler()).permitAll())
 
                 .logout(logout -> logout
                         .logoutUrl("/logout")
